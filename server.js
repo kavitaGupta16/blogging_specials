@@ -24,6 +24,13 @@ app.use((req, res, next) => {
     next()
 })
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build/'))
+    app.get('*', (req, res) => {
+        res.sendFile(require('path').resolve(__dirname, 'client', 'build', 'index.html'))
+    })
+}
+
 app.use('/api', require("./routes"))
 
 const server = app.listen(PORT, () => logging.info(NAMESPACE, `Server is running ${HOST}:${PORT}`))
