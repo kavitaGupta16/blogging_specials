@@ -1,0 +1,79 @@
+@use '../sass' as *
+
+.auth
+    display: flex
+
+    &__illustration
+        width: 70%
+        height: 100vh
+        display: flex
+
+        svg
+            width: fit-content
+    
+    &__form__cr
+        width: 30%
+        height: 100vh
+        display: flex
+        align-items: center
+
+        form
+            width: 100%
+            padding: calc($spacing * 2) 
+
+            .logo__cr
+                margin: $spacing 0
+                text-align: center
+                span
+                    font-size: $font__s500
+                    font-weight: $font__w700
+                    color: $clr__s500
+                    letter-spacing: 1px
+
+            label
+                font-size: 1rem
+                margin-bottom: calc($spacing / 2)
+
+            input[type=text], input[type=password], input[type=email]
+                width: 100%
+                padding: 12px 20px
+                margin: 8px 0
+                display: inline-block
+                border-radius: calc($spacing / 4)
+                height: calc($spacing * 3)
+                padding: calc($spacing / 2)
+                outline: none
+                border: 2px solid $clr__s400    
+
+                &:focus-visible, &:focus-within
+                    outline: none
+                    border: 3px solid $clr__p400
+            
+            input[type=checkbox]
+                margin-right: $spacing
+                accent-color: $clr__p400
+            
+            input[type=submit]
+                width: 100%
+                color: $clr__w100
+                background: $clr__p400
+                padding: 14px 20px
+                margin: 8px 0
+                border-radius: calc($spacing / 4)
+                border: none
+                cursor: pointer
+            
+            .login__fp
+                display: block
+                float: right
+                font-size: 1rem
+                color: $clr__p400
+                text-decoration: underline
+
+            p, a
+                text-align: center
+                font-size: 1rem
+
+                a
+                    color: $clr__p400
+
