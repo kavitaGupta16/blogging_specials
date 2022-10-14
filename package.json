@@ -5,7 +5,7 @@
         "start": "node server.js",
         "serve": "nodemon server.js",
         "dev": "concurrently \"npm run serve\" \"cd client && npm start\"",
-        "heroku-postbuild": "cd client && npm instal && npm run build"
+        "heroku-postbuild": "cd client && npm install && npm run build"
     },
     "dependencies": {
         "bcrypt": "^5.1.0",
