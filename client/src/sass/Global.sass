@@ -1,0 +1,51 @@
+@use './_var' as *
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&display=swap')
+
+*,
+*::before,
+*::after
+    box-sizing: border-box
+
+*
+    margin: 0
+    padding: 0
+
+html:focus-within
+    scroll-behavior: smooth
+
+body
+    min-height: 100vh
+    overflow: hidden
+    text-rendering: optimizeSpeed
+    line-height: 1.5
+    font: $font__w400 $font__s400 $font__fam
+    background: $clr__w200
+
+h1,
+h2,
+h3
+    font-weight: $font__w700
+
+a
+    text-decoration: none
+    color: inherit
+    font-size: $font__s500
+    &:not([class])
+        text-decoration-skip-ink: auto
+
+img
+    max-width: 100%
+    display: block
+
+@media (prefers-reduced-motion: reduce) 
+    html:focus-within 
+        scroll-behavior: auto
+    
+
+    *,
+    *::before,
+    *::after 
+        animation-duration: 0.01ms !important
+        animation-iteration-count: 1 !important
+        transition-duration: 0.01ms !important
+        scroll-behavior: auto !important
