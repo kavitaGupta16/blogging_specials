@@ -1,7 +1,4 @@
 const { default: mongoose } = require("mongoose")
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
 
 
 const userSchema = new mongoose.Schema({
@@ -10,6 +7,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter username"],
         trim: true,
         unique: [true, 'Username is unavailable']
+    },
+    profilePicture: {
+        data: Buffer,
+        contentType: String
     },
     name: {
         type: String,
@@ -27,42 +28,34 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Please enter your password!"],
-    }
-}, {
+    },
+    postInfo: {
+        type:{
+            totalPosts: {
+                type: Number,
+                default: 0
+            },
+            draftPosts: {
+                type: Number,
+                default: 0
+            },
+            archivedPosts: {
+                type: Number,
+                default: 0
+            }
+        }
+    },
+    loginAttempts: {
+        type: Number,
+        default: 0
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     activationToken: String,
     activationTokenExpire: Date, 
+}, {
+    collection: "users",
     timestamps: true
 })
-
-userSchema.pre('save', async(next) => {
-    if(this.isModified('password')) { next() }
-
-    const salt = await bcrypt.genSalt(10)
-    this.password = await bcrypt.hash(this.password, salt)
-    next()
-})
-
-userSchema.methods.matchPasswords = async(password) => {
-    return await bcrypt.compare(password, this.password)
-}
-
-userSchema.methods.getSignedToken = () => {
-    return jwt.sign({ id: this._id }, process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRE })
-}
-
-userSchema.methods.getResetPasswordToken = () => {
-    const resetToken = crypto.randomBytes(20).toString('hex')
-    this.resetPasswordTaken = crypto.createHash('sha256').update(resetToken).digest('hex')
-    this.resetPasswordExpire = new Date(Date.now() + (15 * 60 * 1000))
-}
-
-userSchema.methods.getActivationToken = () => {
-    const activationToken = crypto.randomBytes(20).toString('hex')
-    this.activationTaken = crypto.createHash('sha256').update(activationToken).digest('hex')
-    this.activationExpire = new Date(Date.now() + 2 * (60 * 60 * 1000))
-}
 
 module.exports = mongoose.model("User", userSchema)
