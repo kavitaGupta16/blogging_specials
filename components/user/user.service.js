@@ -50,6 +50,15 @@ const register = async(userName, name, email, password) => {
         await userModel.create(userInfo)
         return({code: 201, message: "User created"})
     } catch (err) {
+        if (err.name === 'MongoServerError') {
+            if (err.code === 11000) {
+                const param = Object.keys(err.keyValue)[0]
+                if (param === 'userName') {
+                    return { code: 400, message: "Username is not available!" }
+                } else if (param === 'email') {
+                    return { code: 400, message: "Email address is already registered"}                }
+            }
+        }
         error("USER-SERVICE", "Error while registering user", err)
         return({code: 500, message: "Error while registering user"})
     }
