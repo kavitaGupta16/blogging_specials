@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Home } from './pages'
-import { Login, Register } from './auth'
+import { Home, NotFound } from './pages'
+import { ForgotPassword, Login, Register } from './auth'
 
 const App = () => {
     return (
@@ -10,9 +10,11 @@ const App = () => {
                 <Route path='/auth'>
                     <Route path='login' element={ <Login /> } />
                     <Route path='register' element={ <Register /> } />
+                    <Route path='forgotPassword' element={ <ForgotPassword /> } />
+                    <Route path='resetPassword/:token' element={ <ForgotPassword reset={true} /> } />
                 </Route>
 
-                <Route path='*' element={ <h1>NF</h1>} />
+                <Route path='*' element={ <NotFound/> } />
             </Routes>
         </BrowserRouter>
     )
