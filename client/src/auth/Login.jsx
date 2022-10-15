@@ -20,7 +20,6 @@ const Login = () => {
         }
         try {
             const { data } = await axios.post("/user/login", {userName, password}, config)
-            console.log(data)
             if (data.success === true) {
                 alert("Login Successful!")
                 localStorage.setItem("authToken", data.token)
