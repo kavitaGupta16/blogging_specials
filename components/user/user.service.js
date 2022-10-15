@@ -11,8 +11,7 @@ const login = async(userName, password, remember=false) => {
         if (!isMatch)
             return({code: 401, message: "Password is incorrect"})
         const token = getSignedToken(user._id, remember)
-        console.log(token)
-        return ({code: 200, message: JSON.stringify({token})})
+        return ({code: 200, message: JSON.stringify({token, success: true})})
     } catch (err) {
         error("USER-SERVICE", "Error while login", err)
         return({code: 500, message: "Error while login"})

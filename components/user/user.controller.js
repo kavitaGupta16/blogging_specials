@@ -1,4 +1,3 @@
-const { error } = require("../../utils/logging")
 const service = require("./user.service")
 
 const login = async(req, res) => {
@@ -52,11 +51,6 @@ const activate = async(req, res) => {
 }
 
 const update = async(req, res) => {
-    // const token = req.params['resetToken']
-    // if (!token ) {
-    //     res.status(206).json({message: "Missing one or more detail(s)"})
-    //     return
-    // }
     const response = await service.update()
     res.status(response.code).send(response.message)
 }
