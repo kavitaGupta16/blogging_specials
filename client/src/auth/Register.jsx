@@ -32,7 +32,7 @@ const Register = () => {
                     {userName, name, email, password}, config)
             if (data === 'User created') {
                 alert("Registration successful!")
-                navigate("/user/login")
+                navigate("/auth/login")
             }
         } catch (error) {
             setError(error.response.data)
