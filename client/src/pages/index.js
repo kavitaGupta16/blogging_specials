@@ -1,2 +1,5 @@
 export { default as Home } from "./home/Home"
+export { default as Post } from "./post/Post"
+export { default as CreatePost } from "./createPost/createPost"
+export { default as UpdatePost } from "./updatePost/updatePost"
 export { default as NotFound } from "./notFound/NotFound"

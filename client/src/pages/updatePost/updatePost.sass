@@ -1,0 +1,41 @@
+@use '../../sass' as *
+
+.postMain
+    display: flex
+    flex-direction: column
+    align-items: center
+    .postBody     
+        padding: $spacing
+
+        form
+            width: 50vw
+            display: flex
+            flex-direction: column
+
+            input[type=text], textarea
+                width: 100%
+                padding: 12px 20px
+                margin: 8px 0
+                display: inline-block
+                border-radius: calc($spacing / 4)
+                height: calc($spacing * 3)
+                padding: calc($spacing / 2)
+                outline: none
+                border: 2px solid $clr__s400    
+
+                &:focus-visible, &:focus-within
+                    outline: none
+                    border: 3px solid $clr__p400
+            
+            textarea
+                height: 50vh
+            
+            input[type=submit], button
+                width: 100%
+                color: $clr__w100
+                background: $clr__p400
+                padding: 14px 20px
+                margin: 8px 0
+                border-radius: calc($spacing / 4)
+                border: none
+                cursor: pointer 

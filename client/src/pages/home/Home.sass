@@ -4,39 +4,18 @@ main
     width: 100%
     min-height: 100vh
 
-    header
-        width: 100%
-        height: 10vh
-        box-shadow: rgba($clr__s500, 19%) 0px 10px 20px, rgba($clr__s500, 23%) 0px 6px 6px
-        background: $clr__p400
-        display: flex
-        align-items: center
-        justify-content: space-between
-        padding: 0 $spacing
+    .myPosts
+        padding: $spacing
 
-        .header
-            &__logo__cr
-                span
-                    font-size: $font__s500
-                    font-weight: $font__w700
-                    color: $clr__w100
-                    letter-spacing: 1px
-            
-            &__right__cr
-                min-width: 15%
-                color: $clr__w100
-                display: flex
-                justify-content: space-evenly
+    .homeBody
+        height: 90vh
+        padding: $spacing
+        overflow-y: auto
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+        grid-gap: 20px
+        align-items: stretch
 
-                a
-                    padding: calc($spacing / 2) calc($spacing / 1.5)
-                    border-radius: calc($spacing / 4)
-                    transition: background, color ease-in-out 550ms
-                    transition-delay: 150ms
+    .body
+        padding: $spacing
 
-                    &:last-child
-                        border: 1px solid $clr__w200
-
-                    &:hover
-                        background: $clr__w100
-                        color: $clr__p400

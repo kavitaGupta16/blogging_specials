@@ -1,21 +1,43 @@
 import "./Home.sass"
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react"
+import { Header, SinglePost } from "../../components"
+import axios from "../../api/axios"
 
-const Home = () => {
+const Home = ({my=false}) => {
+    const [blogs, setBlogs] = useState()
+
+    const fetchAll = async() => {
+        let url
+        if (my) {
+            url = `/blog/my/${localStorage.getItem('authToken')}`
+        } else {
+            url = '/blog/getAll'
+        }
+        const { data } = await axios.get(url)
+        setBlogs(data)
+    }
+
+    useEffect(() => {
+        fetchAll()
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <main>
-            <header>
-                <div className="header__logo__cr">
-                    <span>Blogging Specials</span>
-                </div>
-                <div className="header__central__cr">
-                    {/* <input type="text" name="search__bar" /> */}
-                </div>
-                <div className="header__right__cr">
-                    <Link to='/auth/login'>Login</Link>
-                    <Link to='/auth/register'>Register</Link>
-                </div>
-            </header>
+            <Header />
+            {my && <h1 className="myPosts">My Posts</h1> }
+            <div className="homeBody">
+            { blogs && blogs.map((element) => 
+                <SinglePost 
+                    key={element._id}
+                    id={element._id}
+                    src="sample.jpg"
+                    title={element.title}
+                    body={element.summary} 
+                /> )
+            }
+            </div>            
         </main>
     )
 }

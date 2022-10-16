@@ -1,5 +1,10 @@
 const { default: mongoose } = require("mongoose")
 
+const savedPostsSchema = new mongoose.Schema({
+    id: {
+        type: String
+    }
+})
 
 const userSchema = new mongoose.Schema({
     userName: {
@@ -44,6 +49,9 @@ const userSchema = new mongoose.Schema({
                 default: 0
             }
         }
+    },
+    savedPosts: {
+        type: [savedPostsSchema]
     },
     loginAttempts: {
         type: Number,

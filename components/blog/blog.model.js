@@ -6,9 +6,6 @@ const commentSchema = new mongoose.Schema({
     },
     by: {
         type: String
-    },
-    to: {
-        type: String
     }
 }, {
     timestamps: true
@@ -21,22 +18,15 @@ const blogSchema = new mongoose.Schema({
     title: {
         type: String
     },
-    headerImage: {
-        type: String
-    },
     body: {
         type: String
     },
-    status: {
+    summary: {
         type: String
     },
     comments: {
         type: [commentSchema]
     },
-    likes: {
-        type: Number,
-        default: 0
-    }
 }, {
     collection: 'blogs',
     timestamps: true

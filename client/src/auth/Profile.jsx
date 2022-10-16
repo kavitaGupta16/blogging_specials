@@ -1,17 +1,47 @@
 import "./Auth.sass"
-import { RegisterIllustration } from '../assets'
+import { ProfileIllustration } from '../assets'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from '../api/axios'
 
-const Register = () => {
+const Profile = () => {
     const navigate = useNavigate()
+    const [update, setUpdate] = useState(false)
     const [userName, setUserName] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
     const [error, setError] = useState('')
+
+    const getDetails = async() => {
+        try {
+            const { data } = await axios.get(`/user/getUserDetails/${localStorage.getItem('authToken')}`)        
+            setUserName(data.userName)
+            setName(data.name)
+            setEmail(data.email)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
+    const killUser = async(e) => {
+        e.preventDefault()
+        // eslint-disable-next-line no-restricted-globals
+        const consent = confirm("Are you sure you want to delete your account!\nAll your post will also be deleted")
+        if (consent) {
+            const { data } = await axios.delete(`/user/delete/${localStorage.getItem('authToken')}`)
+            if (data === 'Deleted') {
+                localStorage.removeItem('authToken')
+                navigate('/auth/register')
+            }
+        }
+
+    }
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -28,11 +58,11 @@ const Register = () => {
             return
         }
         try {
-            const { data } = await axios.post("/user/register", 
+            const { data } = await axios.patch(`/user/update/${localStorage.getItem('authToken')}`, 
                     {userName, name, email, password}, config)
-            if (data === 'User created') {
-                alert("Registration successful!")
-                navigate("/auth/login")
+            if (data === 'Updated') {
+                alert("Updated successfully!")
+                navigate("/")
             }
         } catch (error) {
             setError(error.response.data)
@@ -45,7 +75,7 @@ const Register = () => {
     return (
         <section className="auth">
             <div className="auth__illustration">
-                <RegisterIllustration />
+                <ProfileIllustration />
             </div>
             <div className="auth__form__cr">
                 <form onSubmit={handleSubmit}>
@@ -61,6 +91,7 @@ const Register = () => {
                             id="register__userName"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
+                            disabled
                             required />
                         <label htmlFor="register__name">Name:</label>
                         <input 
@@ -69,7 +100,8 @@ const Register = () => {
                             id="register__name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required />
+                            required
+                            disabled={!update} />
                         <label htmlFor="register__email">Email Address:</label>
                         <input 
                             type="email" 
@@ -77,15 +109,17 @@ const Register = () => {
                             id="register__email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required />
-                        <label htmlFor="register__password">Password:</label>
+                            required
+                            disabled={!update} />
+                        <label htmlFor="register__password">New Password:</label>
                         <input 
                             type="password" 
                             name="register__password" 
                             id="register__password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required />
+                            required={password.length > 1}
+                            disabled={!update} />
                         <label htmlFor="register__cf__password">Confirm Password:</label>
                         <input 
                             type="password" 
@@ -93,9 +127,14 @@ const Register = () => {
                             id="register__cf__password"
                             value={confPassword}
                             onChange={(e) => setConfPassword(e.target.value)}
-                            required />
-                        <input type="submit" value="Register" />
-                        <p>Already a user? <Link to='/auth/login'>Login</Link></p>
+                            required={password.length > 1}
+                            disabled={!update} />
+                        { update
+                            ? <input type="submit" value="Save" />
+                            : <button onClick={() => setUpdate(!update)}>Update</button>
+                        }
+                        <button id="deleteBtn" onClick={killUser}>Delete Account</button>
+                        <p>Go back to <Link to='/'>Home</Link></p>
                     </div>
                 </form>
             </div>
@@ -103,4 +142,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Profile

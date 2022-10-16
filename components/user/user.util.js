@@ -18,26 +18,8 @@ const getSignedToken = (id, remember) => {
         { expiresIn: remember ? JWT_EXPIRE_PERM : JWT_EXPIRE_TEMP })
 }
 
-const getResetPasswordToken = () => {
-    const resetToken = crypto.randomBytes(20).toString('hex')
-    const resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-    const resetPasswordExpire = new Date(Date.now() + (15 * 60 * 1000))
-    return [resetPasswordToken, resetPasswordExpire]
-}
-
-const getActivationToken = () => {
-    let activationToken = crypto.randomBytes(20).toString('hex')
-        activationToken = crypto.createHash('sha256').update(activationToken).digest('hex')
-    const activationExpire = new Date(Date.now() + 2 * (60 * 60 * 1000))
-    return [activationToken, activationExpire]
-
-}
-
-
 module.exports = {
     getHashedPassword,
     matchPasswords,
-    getSignedToken,
-    getResetPasswordToken,
-    getActivationToken
+    getSignedToken
 }

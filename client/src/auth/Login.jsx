@@ -42,7 +42,7 @@ const Login = () => {
             <div className="auth__form__cr">
                 <form onSubmit={handleSubmit}>
                     <div className="logo__cr">
-                        <span>Blogging Specials</span>
+                        <Link to='/' id="logo">Blogging Specials</Link>
                     </div>
                     <div className="container">
                         { error && <p id="error__cr">{error}</p>}

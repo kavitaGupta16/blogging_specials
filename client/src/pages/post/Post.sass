@@ -1,0 +1,60 @@
+@use '../../sass' as *
+
+.viewPost
+    .postBody     
+        padding: $spacing
+        display: flex
+        .left__cr
+            width: 70%
+            .title__cr
+                display: flex
+                align-items: center
+                justify-content: space-between
+
+                .right
+                    svg
+                        fill: $clr__p400
+                        margin: 0 $spacing
+                        cursor: pointer
+
+            .content
+                font: $font__s500
+                padding: $spacing
+            
+        .right__cr
+            width: 30%
+            h2
+                text-align: center
+
+            form 
+                input[type=text]
+                    width: 100%
+                    padding: 12px 20px
+                    margin: 8px 0
+                    display: inline-block
+                    border-radius: calc($spacing / 4)
+                    height: calc($spacing * 3)
+                    padding: calc($spacing / 2)
+                    outline: none
+                    border: 2px solid $clr__s400    
+
+                    &:focus-visible, &:focus-within
+                        outline: none
+                        border: 3px solid $clr__p400
+                
+                input[type=submit]
+                    width: 100%
+                    color: $clr__w100
+                    background: $clr__p400
+                    padding: 14px 20px
+                    margin: 8px 0
+                    border-radius: calc($spacing / 4)
+                    border: none
+                    cursor: pointer
+
+            .nothing
+                width: 100%
+                height: 100%
+                display: flex
+                align-items: center
+                justify-content: center
