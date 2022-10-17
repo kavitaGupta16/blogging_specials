@@ -94,8 +94,6 @@ const Post = () => {
                                 <div className="comments__cr" key={comment.by}>
                                     <h3>{comment.by}</h3>
                                     <p>{comment.comment}</p>
-                                    <h3>{comment.by}</h3>
-                                    <p>{comment.comment}</p>
                                 </div>
                             )
                         })}
